@@ -33,7 +33,14 @@ def create_cherwell_ticket():
 
     # Check if the request was successful
     if response.status_code == 201:
-        print('Ticket created successfully.')
+        # Parse the response JSON
+        response_json = response.json()
+
+        # Extract public ID and record ID
+        public_id = response_json.get('businessObject').get('publicId')
+        record_id = response_json.get('businessObject').get('recordId')
+
+        print(f'Ticket created successfully. Public ID: {public_id}, Record ID: {record_id}')
     else:
         print(f'Error creating ticket. Status code: {response.status_code}, Response: {response.text}')
 
