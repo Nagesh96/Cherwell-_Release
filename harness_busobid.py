@@ -5,7 +5,7 @@ USERNAME="ARAClientPROD"
 PASSWORD="<+secrets.getValue("account.ARAClientPROD")>"
 
 # Get Authorization token
-AUTH_TOKEN_RESPONSE=$(curl -s -X POST --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" -d "grant_type=password&client_id=$CLIENT_ID&username=$USERNAME&password=$PASSWORD" "$baseUrl/CherwellAPI/token"| jq -r '.access_token')
+AUTH_TOKEN_RESPONSE=$(curl -s -X POST --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" -d "grant_type=password&client_id=$CLIENT_ID&username=$USERNAME&password=$PASSWORD" "$baseUrl/CherwellAPI/token"| /apps/svc_smobusr/db_deployment/jq -r '.access_token')
 
 echo "Current API Token:" $AUTH_TOKEN_RESPONSE
 
@@ -15,6 +15,6 @@ echo "Current API Token:" $AUTH_TOKEN_RESPONSE
 BUSINESS_OBJECT_NAME="ChangeRequest"
 
 # Fetch busObId for the Change Request Business Object
-BUSOBID=$(curl -s -X GET "$CHERWELL_URL/busobdefinition?busobname=$BUSINESS_OBJECT_NAME" -H "Authorization: $AUTH_TOKEN_RESPONSE" | jq -r '.busObId')
+BUSOBID=$(curl -s -X GET "$CHERWELL_URL/busobdefinition?busobname=$BUSINESS_OBJECT_NAME" -H "Authorization: $AUTH_TOKEN_RESPONSE" | /apps/svc_smobusr/db_deployment/jq -r '.busObId')
 
 echo "busObId for $BUSINESS_OBJECT_NAME: $BUSOBID"
