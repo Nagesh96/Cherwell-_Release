@@ -16,3 +16,10 @@ BUSINESS_OBJECT_NAME="ChangeRequest"
 BUSOBID=$(curl -s -X GET "$CHERWELL_URL/busobdefinition?busobname=$BUSINESS_OBJECT_NAME" -H "Authorization: $TOKEN" | jq -r '.busObId')
 
 echo "busObId for $BUSINESS_OBJECT_NAME: $BUSOBID"
+
+
+
+baseUrl="https://charter.cherwellondemand.com"
+AUTH_TOKEN_RESPONSE=$(curl -s -X POST --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" -d "grant_type=password&client_id=<+secrets.getValue("account.ARAClientPROD_Client_ID")>&username=ARAClientPROD&password=<+secrets.getValue("account.ARAClientPROD")>" "$baseUrl/CherwellAPI/token"| /apps/svc_smobusr/db_deployment/jq -r '.access_token')
+#token=$(echo -n "$AUTH_TOKEN_RESPONSE" | /apps/svc_smobusr/db_deployment/jq -sr '.["access_token"]')
+echo "Current API Token:" $AUTH_TOKEN_RESPONSE
