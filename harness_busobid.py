@@ -18,3 +18,19 @@ BUSINESS_OBJECT_NAME="ChangeRequest"
 BUSOBID=$(curl -s -X GET "$CHERWELL_URL/busobdefinition?busobname=$BUSINESS_OBJECT_NAME" -H "Authorization: $AUTH_TOKEN_RESPONSE" | /apps/svc_smobusr/db_deployment/jq -r '.busObId')
 
 echo "busObId for $BUSINESS_OBJECT_NAME: $BUSOBID"
+
+
+# Fetch busObId for the Change Request Business Object
+BUSOBID_RESPONSE=$(curl -s -X GET "$baseUrl/busobdefinition?busobname=$BUSINESS_OBJECT_NAME" -H "Authorization: $AUTH_TOKEN_RESPONSE")
+
+# Check for errors in the response
+if [[ $(echo "$BUSOBID_RESPONSE" | jq -e .error) != "null" ]]; then
+    echo "Error in busObId response:"
+    echo "$BUSOBID_RESPONSE" | jq .
+    exit 1
+fi
+
+# Extract the busObId from the response
+BUSOBID=$(echo "$BUSOBID_RESPONSE" | jq -r '.busObId')
+
+echo "busObId for $BUSINESS_OBJECT_NAME: $BUSOBID"
