@@ -46,3 +46,7 @@ except requests.exceptions.RequestException as err:
 except KeyError:
     print("Error: 'access_token' key not found in the JSON response.")
     sys.exit(1)
+
+
+curl -s 'https://api.github.com/users/lambda' | \
+    python3 -c "import sys, json; print(json.load(sys.stdin)['name'])"
