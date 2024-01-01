@@ -22,6 +22,9 @@ auth_data = {
 auth_response = requests.post(auth_url, data=auth_data)
 access_token = auth_response.json()["access_token"]
 
+#curl -s 'https://api.github.com/users/lambda' | \
+    python3 -c "import sys, json; print(json.load(sys.stdin)['name'])"
+
 # Set the Cherwell business object properties
 business_object = {
     "busObId": "<your_release_ticket_busobid>",
