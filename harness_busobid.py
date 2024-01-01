@@ -37,3 +37,9 @@ fi
 BUSOBID=$(echo "$BUSOBID_RESPONSE" | /apps/svc_smobusr/db_deployment/jq -r '.busObId')
 
 echo "busObId for $BUSINESS_OBJECT_NAME: $BUSOBID"
+
+
+
+
+curl -s 'https://api.github.com/users/lambda' | \
+    python3 -c "import sys, json; print(json.load(sys.stdin)['name'])"
